@@ -115,7 +115,7 @@ def main():
             called_list.sort()
             called = st.multiselect('Called', called_list)
     
-        col4, col5, col6 = st.columns(3)
+        col4, col5, col6, col7 = st.columns([3,3,2,1])
         with col4:
             start_coverage, end_coverage = st.select_slider(
                 "Select a range of coverage",
@@ -129,6 +129,13 @@ def main():
             st.write('')
             st.write('')
             on = st.toggle("Underserved more than 90 days")
+        
+        with col7:
+            st.write('')
+            st.write('')
+            if st.button("🔄 Refresh data"):#, use_container_width=True):
+                get_data.clear()
+                df = get_data(st.session_state.IS_name)
     
     if hfr == []:
         hfr_filter = hfr_list
@@ -165,8 +172,8 @@ def main():
     hollowcolor = '#E2E2E2'
     size = 30
 
-    textvariable = int((df_filtered['# Calls'].sum()/df_filtered['IS Target'].sum())*100)
-    arcvariable = (df_filtered['# Calls'].sum()/df_filtered['IS Target'].sum())*220
+    textvariable = int((df_filtered[df_filtered['# Calls']>0]['Account ID'].nunique()/df_filtered['Account ID'].nunique())*100)
+    arcvariable = (df_filtered[df_filtered['# Calls']>0]['Account ID'].nunique()/df_filtered['Account ID'].nunique())*220
     if textvariable >=100:
         text_x = 380
         angle = 380
@@ -205,6 +212,4 @@ def main():
                                 mime='application/vnd.ms-excel')
 
 if __name__ == "__main__":
-
     main()
-
