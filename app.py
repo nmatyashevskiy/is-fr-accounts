@@ -80,6 +80,7 @@ def get_data(IS_name):
     All_Accounts['Last FSR Call'] = All_Accounts['Last FSR Call'].map(lambda x: str(x.date()).replace("/", "-"))
     All_Accounts['Last FSR Call'] = All_Accounts['Last FSR Call'].replace('NaT', '')
 
+    All_Accounts['CIP'] = All_Accounts['CIP'].astype(int)
     All_Accounts['CIP'] = All_Accounts['CIP'].astype(str)
 
     return All_Accounts
@@ -175,6 +176,7 @@ def main():
                      &(df['IS Target'] <= target[1])]
     df_filtered['Coverage'] = df_filtered['Coverage'] * 100
     df_filtered['Brick Code'] = df_filtered['Brick Code'].astype('str')
+
     if on:
         df_filtered = df_filtered[df_filtered['Days vo Calls'] > 90]
     df_filtered = df_filtered[['Account ID', 'CIP', 'Account Owner', 'IS', 'Account Name', 'Account Category', 'Account Segment',
@@ -213,7 +215,7 @@ def main():
     st.dataframe(df_filtered,
                 column_config={
                 'Coverage': st.column_config.NumberColumn(
-                     "Coverage",
+                     "Call Target Achievement",
                      help="The percentage value",
                      format="%.0f%%")},
                 hide_index=True)
@@ -229,4 +231,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
