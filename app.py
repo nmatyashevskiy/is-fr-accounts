@@ -72,7 +72,7 @@ def get_data(IS_name):
     All_Accounts['Call Rate'] = All_Accounts['# Calls'].map(lambda x: str(int(x))) + "/" + All_Accounts['IS Target'].map(lambda x: str(int(x)))
     All_Accounts['Coverage'] = All_Accounts['# Calls'] / All_Accounts['IS Target']
     All_Accounts['Coverage_tech'] = All_Accounts['# Calls'] / All_Accounts['IS Target']
-    All_Accounts[All_Accounts['Coverage_tech'] > 1, 'Coverage_tech'] = 1
+    All_Accounts.loc[All_Accounts['Coverage_tech'] > 1, 'Coverage_tech'] = 1
     All_Accounts['Called'] = All_Accounts['# Calls'].map(lambda x: "Yes" if x > 0 else "No")
     
     All_Accounts['Last Call'] = All_Accounts['Last Call'].map(lambda x: str(x.date()).replace("/", "-"))
@@ -229,3 +229,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
