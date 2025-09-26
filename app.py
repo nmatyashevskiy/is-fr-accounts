@@ -78,6 +78,8 @@ def get_data(IS_name):
     All_Accounts['Last FSR Call'] = All_Accounts['Last FSR Call'].map(lambda x: str(x.date()).replace("/", "-"))
     All_Accounts['Last FSR Call'] = All_Accounts['Last FSR Call'].replace('NaT', '')
 
+    All_Accounts['CIP'] = All_Accounts['CIP'].astype(str)
+
     return All_Accounts
 
 def main():
@@ -122,7 +124,7 @@ def main():
         with col3:
             called_list = df['Called'].map(lambda x: str(x)).unique()
             for i, n in enumerate(called_list):
-                if n == "nan":
+                if n == None:
                     called_list[i] = "-"
             called_list.sort()
             called = st.multiselect('Called', called_list)
